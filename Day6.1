@@ -1,0 +1,19 @@
+word = input()
+count_z, count_o = 0, 0
+for i in range(len(word)):
+    if word[i]=='z':
+        count_z += 1
+    elif word[i] == 'o':
+        count_o += 1
+if 2*count_z == count_o:
+    print("Yes")
+else:
+    print("No")
+    
+Second Approach:
+from collections import Counter
+word_counter = Counter(word)
+if 2*word_counter['z'] == word_counter['o']:
+    print("Yes")
+else:
+    print("No")
