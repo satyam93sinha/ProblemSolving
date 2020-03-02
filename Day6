@@ -4,3 +4,5 @@ for i in range(int(input())):
         print(a//b)
     else:
         print(b//a)
+    
+    # print(max(a, b)//min(a, b))
