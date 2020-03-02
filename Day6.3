@@ -1,0 +1,17 @@
+from collections import Counter
+for i in range(int(input())):
+    b = input()
+    b_counter = Counter(b)
+    count, j = 0, 0
+    if b_counter['C']==0 or b_counter['S']==0:
+        print(len(b))
+    else:
+        while j<len(b):
+            #print(b[j:j+3])
+            if b[j:j+3] not in ['SSS', 'CCC'] and j+3<len(b)+1:
+                count += 3
+                #print(count)
+                j += 3
+            else:
+                j += 1
+        print(len(b)-count)
