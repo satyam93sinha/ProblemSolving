@@ -1,3 +1,49 @@
+
+# Time Complexity: O(n) and Space Complexity: O(1)
+# function should append an element on to the stack
+from math import inf
+def push(arr, ele):
+    # Code here
+    return arr.append(ele)
+
+# Function should pop an element from stack
+def pop(arr):
+    # Code here
+    if isEmpty(arr):
+        return
+    else:
+        return arr.pop()
+
+# function should return 1/0 or True/False
+def isFull(n, arr):
+    # Code here
+    if len(arr)==n:
+        return True
+    else:
+        return False
+
+# function should return 1/0 or True/False
+def isEmpty(arr):
+    #Code here
+    if len(arr)==0:
+        return True
+    else:
+        return False
+
+# function should return minimum element from the stack
+def getMin(n, arr):
+    # Code here
+    min_ = inf
+    while not isEmpty(arr):
+        temp = pop(arr)
+        if temp!=None and min_>temp:
+            min_ = temp
+    return min_
+
+
+--------------------------------------------------------------------------------------------------------
+# Time Complexity: O(1)
+# Space Complexity: O(n)
 aux_stack = []
 def push(arr, ele):
     # Code here
@@ -49,3 +95,47 @@ def getMin(n, arr):
     # Code here
     global aux_stack
     return pop(aux_stack)
+
+
+---------------------------------------------------------------------------------------------------------
+# Time Complexity: O(1)
+# Space Complexity: O(1)
+from math import inf
+min_ = inf
+def push(arr, ele):
+    # Code here
+    global min_
+    arr.append(ele)
+    if ele<min_:
+        min_ = ele
+    
+
+# Function should pop an element from stack
+def pop(arr):
+    # Code here
+    if isEmpty(arr):
+        return
+    else:
+        return arr.pop()
+
+# function should return 1/0 or True/False
+def isFull(n, arr):
+    # Code here
+    if len(arr)==n:
+        return True
+    else:
+        return False
+
+# function should return 1/0 or True/False
+def isEmpty(arr):
+    #Code here
+    if len(arr)==0:
+        return True
+    else:
+        False
+
+# function should return minimum element from the stack
+def getMin(n, arr):
+    # Code here
+    global min_
+    return min_
