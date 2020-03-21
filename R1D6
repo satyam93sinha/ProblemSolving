@@ -1,0 +1,88 @@
+Question at:
+https://www.hackerearth.com/practice/data-structures/linked-list/singly-linked-list/practice-problems/algorithm/reversed-linked-list-01b722df/
+
+Using Arrays and Stack Data-Structure.
+Time Complexity: O(n*len(stack))
+Space Complexity: O(n*len(stack)), result array and stack take this space.
+
+n = int(input())
+arr = list(map(int, input().split()))
+result, stack = [], []
+j = 0
+for i in range(n):
+    if arr[i]%2 != 0 and len(stack) == 0:
+        result.append(arr[i])
+    elif arr[i]%2 == 0:
+        stack.append(arr[i])
+        # print("stack:", stack)
+    elif arr[i]%2 != 0 and len(stack) != 0:
+        while len(stack)!=0:
+            result.append(stack.pop())
+            # print("result:", result)
+        result.append(arr[i])
+while len(stack)!=0:
+    result.append(stack.pop())
+for i in range(n):
+    print(result[i], end=' ') 
+
+--------------------------------------------------------------------------------------------------------
+Using Linked List and Stack Data-Structure
+Time Complexity: O(n*len(self.stack))
+Space Complexity: O(len(self.stack))
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self, head=None):
+        self.head = head
+        self.stack = []
+        self.current = self.head
+    
+    def reversed_list(self, value, i):
+        # If value is odd and head is None and stack is empty
+        if value%2!=0 and self.head==None and len(self.stack)==0:
+            # Creating Node for value passed
+            value = Node(value)
+            # setting head to value
+            self.head = value
+            self.current = self.head
+        # elif value is even appending it to instantiated stack
+        elif value%2==0:
+            self.stack.append(value)
+        # elif value is odd and there are some values in self.stack
+        elif value%2 != 0 and len(self.stack):
+            # a while loop iterates until stack is empty
+            while len(self.stack):
+                # if head is none/first element was even,
+                # setting last even number to head
+                if self.head == None:
+                    self.head = Node(self.stack.pop())
+                    self.current = self.head
+                else:
+                    self.current.next = Node(self.stack.pop())
+                    self.current = self.current.next
+            self.current.next = Node(value)
+            self.current = self.current.next
+        else:
+            self.current.next = Node(value)
+            self.current = self.current.next
+        while i==n-1 and len(self.stack)>0:
+            if self.head==None:
+                self.head = Node(self.stack.pop())
+                self.current = self.head
+            else:
+                self.current.next = Node(self.stack.pop())
+                self.current = self.current.next
+        return self.head
+
+n = int(input())
+arr = list(map(int, input().split()))
+ll = LinkedList()
+for i in range(n):
+    head = ll.reversed_list(arr[i], i)
+while head:
+    print(head.data, end=' ')
+    head = head.next
