@@ -1,0 +1,18 @@
+Question at: https://www.hackerearth.com/practice/data-structures/stacks/basics-of-stacks/practice-problems/algorithm/staque-1-e790a29f/
+
+Time Complexity: O(k)
+Space Complexity: O(1)
+
+n, k = map(int, input().split())
+arr = list(map(int, input().split()))
+sum_, max_, i = 0, 0, 0
+sum_ += sum(arr[:k])
+max_ = sum_
+while i<k-1:
+    sum_ = sum_ + arr[n-1-i] - arr[k-1-i]
+    if max_<=sum_:
+        max_ = sum_
+    i += 1
+if max_==0:
+    max_ = sum_
+print(max_)
