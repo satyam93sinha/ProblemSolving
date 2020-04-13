@@ -1,0 +1,38 @@
+https://leetcode.com/explore/learn/card/data-structure-tree/17/solve-problems-recursively/536/
+
+Approach 1: Recursive
+A tree is symmetric if the left subtree is a mirror reflection of the right subtree.
+
+Therefore, the question is: when are two trees a mirror reflection of each other?
+
+ALGO: Two trees are a mirror reflection of each other if:
+
+1. Their two roots have the same value.
+2. The right subtree of each tree is a mirror reflection of the left subtree of the other tree.
+
+This is like a person looking at a mirror. The reflection in the mirror has the same head, but the reflection's right arm corresponds to the actual person's left arm, and vice versa.
+
+The explanation above translates naturally to a recursive function as follows.
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def __init__(self):
+        self.stack = list()
+    def isSymmetric(self, root: TreeNode) -> bool:
+        return self.isMirror(root, root)
+    
+    def isMirror(self, root1, root2):
+        if root1==None and root2==None:
+            return True
+        if root1==None or root2==None:
+            return False
+        print("Before Return: root1:{}, root2:{}".format(root1.val, root2.val))
+        return (root1.val==root2.val) and self.isMirror(root1.left, root2.right) and self.isMirror(root1.right, root2.left)
+        
