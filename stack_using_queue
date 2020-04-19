@@ -1,0 +1,79 @@
+STACK USING QUEUES:
+
+Approach-1: Time Complexity: Push- O(1), Pop- O(n), Top- O(n) is unnecessary, but can be reduced to O(1) bcoz we can view rear in queue.
+Space Complexity: O(2*n).
+class MyStack:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.queue1 = deque(list())
+        self.queue2 = deque(list())
+        
+
+    def push(self, x: int) -> None:
+        """
+        Push element x onto stack.
+        """
+        self.queue1.append(x)
+
+    def pop(self) -> int:
+        """
+        Removes the element on top of the stack and returns that element.
+        """
+        while len(self.queue1)>1:
+            self.queue2.append(self.queue1.popleft())
+        while len(self.queue2):
+            self.queue1.append(self.queue2.popleft())
+        return self.queue1.popleft()
+
+    def top(self) -> int:
+        """
+        Get the top element.
+        """
+        top = None
+        while len(self.queue1):
+            self.queue2.append(self.queue1.popleft())
+        while len(self.queue2):
+            top = self.queue2.popleft()
+            self.queue1.append(top)
+        return top
+
+    def empty(self) -> bool:
+        """
+        Returns whether the stack is empty.
+        """
+        if len(self.queue1)==0:
+            return True
+        else:
+            False
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
+
+Top- TIME: O(1)
+
+def pop(self) -> int:
+        """
+        Removes the element on top of the stack and returns that element.
+        """
+        while len(self.queue1)>1:
+            self.queue2.append(self.queue1.popleft())
+        while len(self.queue2):
+            self.top_ = self.queue2.popleft()
+            self.queue1.append(self.top_)
+            # self.queue1.append(self.queue2.popleft())
+        return self.queue1.popleft()
+
+    def top(self) -> int:
+        """
+        Get the top element.
+        """
+        # return self.queue1[-1]
+        return self.top_
