@@ -1,0 +1,45 @@
+Question: https://leetcode.com/explore/learn/card/array-and-string/203/introduction-to-string/1160/
+Explanation Video: https://www.youtube.com/watch?v=OEW50g03mT0
+
+Intuition:
+----------
+Add binary digits as normal addition.
+
+ALGORITHM:
+-----------
+1. strings a and b can differ in lengths
+2. addition is done from right to left
+3. for points 1 and 2 above, we mention i, j as the last indices/index of strings a and b
+4. we will keep iterating until the longest one of a and b is over, i.e., i>=0 or j>=0, to not miss a part of longest string while
+considering the smallest one.
+5. there can be carry so we have already declared a variable in function's scope, carry = 0
+6. res stores the resulting string, after addition result
+7. now, we declare sum_ to calculate the current sum of digits we are looking at, sum_ = carry, bcoz in the end we store residual into carry
+8. if one of the strings end before one, we don't want to keep considering that one thus, we use further conditional statements:
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        a_len, b_len = len(a), len(b)
+        carry = 0
+        res = ''
+        i, j = a_len-1, b_len-1
+        while i>=0 or j>=0:
+            # to iterate over both the strings completely we take or
+            sum_ = carry
+            # sums up the digits, so 1+1 = 2, 1+0 = 1, 0+0 = 0
+            if i>=0:
+                sum_ += ord(a[i]) - ord('0')
+                # for '1' - '0' (ascii value difference) = 1
+                # '0' - '0' (ascii value difference) = 0
+            if j>=0:
+                sum_ += ord(b[j]) - ord('0')
+            res = str(sum_%2) + res
+            # if sum_ = 1, sum_%2 = 1, elif sum_=2, sum_%2=0
+            carry = int(sum_/2)
+            # if sum_=1, carry=int(sum_/2)=int(1/2)=0, elif sum_=2, carry=int(sum_/2)=int(2/2)=1
+            i -= 1
+            j -= 1
+        if carry!=0:
+            res = '1'+res
+        return res
