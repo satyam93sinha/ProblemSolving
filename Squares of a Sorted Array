@@ -1,0 +1,23 @@
+Question: https://leetcode.com/explore/learn/card/fun-with-arrays/521/introduction/3240/
+Consult hint/solution to understand below Two-Pointer approach
+
+Intuition:
+----------
+Iterate over A, array using front, rear two-pointers and keep incrementing or decrementing them in every iteration and storing the
+squared numbers from back(here)/front(some changes to this code) into square_arr, resulting array.
+-----------------------------------------------------------------------------------------------------
+
+class Solution:
+    def sortedSquares(self, A: List[int]) -> List[int]:
+        square_arr = [None]*len(A)
+        front, rear, back = 0, len(A)-1, len(square_arr)-1
+        while front<rear:
+            if abs(A[front])<=abs(A[rear]):
+                square_arr[back] = A[rear]*A[rear]
+                rear -= 1
+            else:
+                square_arr[back] = A[front]*A[front]
+                front += 1
+            back -= 1
+        square_arr[back] = A[rear]*A[rear]
+        return square_arr
