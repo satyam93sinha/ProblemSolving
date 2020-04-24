@@ -1,0 +1,20 @@
+Question: https://leetcode.com/explore/learn/card/fun-with-arrays/521/introduction/3237/
+
+See Hint:
+How to compute the number of digits of a number ?
+Ans: Divide the number by 10 again and again to get the number of digits.
+
+TIME: O(n*m), where n is len(nums) and m is len(element)
+Space: O(1)
+
+class Solution:
+    def findNumbers(self, nums: List[int]) -> int:
+        even_elems = 0
+        for i in range(len(nums)):
+            curr_elem, digits = nums[i], 0
+            while curr_elem>0:
+                digits += 1
+                curr_elem = curr_elem//10
+            if digits%2 == 0:
+                even_elems += 1
+        return even_elems
