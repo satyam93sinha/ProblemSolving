@@ -1,0 +1,56 @@
+Question: https://leetcode.com/explore/learn/card/data-structure-tree/133/conclusion/943/
+Explanation Video: https://www.youtube.com/watch?v=W9irlUOf6lI
+
+---------------------------------------------------------------------------------------------------------------------------
+Given preorder and inorder traversal of a tree, construct the binary tree.
+Note:
+=====
+You may assume that duplicates do not exist in the tree.
+If there are duplicates, how would you know which is the root while going recursively, thus, never forget this requirement.
+----------------------------------------------------------------------------------------------------------------------------
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        return self.buildTreeHelper(preorder, inorder, 0, len(inorder)-1, 0, len(preorder)-1)
+    
+    def buildTreeHelper(self, preorder, inorder, inorder_start, inorder_end, preorder_start, preorder_end):
+        if inorder_start>inorder_end:
+            return
+        else:
+            root = TreeNode(preorder[preorder_start])
+            rootIndex = -1
+            for i in range(inorder_start, inorder_end+1):
+                if root.val==inorder[i]:
+                    rootIndex = i
+                    break
+            left_inorder_start = inorder_start 
+            # always 0, bcoz left root right, so left always starts from 0 index of inorder
+            left_inorder_end = rootIndex-1
+            # bcoz left will end just before rootIndex reason: left root right
+            left_preorder_start = preorder_start+1
+            # first index of preorder will always be root so we take from the next index of preorder array,
+            # for next left root it's always left_preorder_start += 1
+            left_preorder_end = left_inorder_end-left_inorder_start+left_preorder_start
+            # from the formula: left_inorder_end-left_inorder_start = left_preorder_end-left_preorder_start
+            # why above: simply number of elements in the array/list
+            right_inorder_start = rootIndex+1
+            # will always be after rootIndex bcoz in inorder left root right
+            right_inorder_end = inorder_end
+            # will always be the end, bcoz left root right, right ends at the extreme right index
+            right_preorder_start = left_preorder_end+1
+            # preorder: root left right, thus, in preorder the right_preorder_start starts from next index/elem
+            # of left's preorder end's index/element
+            right_preorder_end = preorder_end
+            # self explanatory, root left right
+            root.left = self.buildTreeHelper(preorder, inorder, left_inorder_start,
+                                             left_inorder_end, left_preorder_start, left_preorder_end)
+            root.right = self.buildTreeHelper(preorder, inorder, right_inorder_start, 
+                                             right_inorder_end, right_preorder_start, right_preorder_end)
+            return root
