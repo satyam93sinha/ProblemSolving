@@ -1,0 +1,23 @@
+Question: https://leetcode.com/explore/learn/card/data-structure-tree/17/solve-problems-recursively/537/
+Video Explanation: https://www.youtube.com/watch?v=Hg82DzMemMI (using recursion), https://www.youtube.com/watch?v=nBbYMdtZIuc (using iteration)
+
+Intuition:
+----------
+1. path has to be found from root-to-leaf: thus, shall return true when it encounters left and right as None for leaf and sum=0
+2. sum is not found in the tree: in this case sum will never be zero, keep decrementing sum down a path
+------------------------------------------------------------------------------------------------------------------------------------
+
+Here, we divide the problem into smaller chunks using recursion:
+1. root.left is left subtree passed to hasPathSum with smaller sum (sum-root.value) if found (elif condition), it returns True
+2. root.right is right subtree passed to hasPathSum with smaller sum (sum-root.value) if found (elif condition), returns True
+3. in case it doesn't return true, self.hasPathSum(left subtree) or self.hasPathSum(right subtree) finally, returns False reaching root==None
+===========================================================================================================================================
+
+class Solution:
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if root==None:
+            return False
+        elif root.left==None and root.right==None and sum-root.val==0:
+            return True
+        else:
+            return self.hasPathSum(root.left, sum-root.val) or self.hasPathSum(root.right, sum-root.val)
