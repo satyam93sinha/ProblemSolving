@@ -1,0 +1,48 @@
+Approach1: Brute-Force
+HORIZONTAL SCANNING:
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if len(strs)==0:
+            return ''
+        if len(strs)==1:
+            return strs[0]
+        # print(strs[0], strs[1])
+        prefix = self.common_prefix(strs[0], strs[1])
+        # print("prefix:", prefix)
+        for i in range(2, len(strs)):
+            prefix = self.common_prefix(prefix, strs[i])
+        return prefix
+    
+    def common_prefix(self, str1, str2):
+        n1 = len(str1)
+        n2 = len(str2)
+        i, j = 0, 0
+        result = ''
+        while i<n1 and j<n2:
+            if str1[i]!=str2[j]:
+                break
+            # print(str1[i], str2[j])
+            result += str1[i]
+            i += 1
+            j += 1
+            # print(result)
+        return result
+        
+  VERTICAL SCANNING:
+  
+  class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if len(strs)==0:
+            return ''
+        min_str = min(strs, key=len)
+        # print("min_str:", min_str)
+        res = ''
+        for i in range(len(min_str)):
+            current = min_str[i]
+            for j in range(len(strs)):
+                # print("current, res: ", current, res)
+                if current != strs[j][i]:
+                    return res
+            res += current
+        return res
