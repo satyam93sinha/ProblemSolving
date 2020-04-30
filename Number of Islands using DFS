@@ -1,0 +1,29 @@
+Question: https://leetcode.com/explore/learn/card/queue-stack/231/practical-application-queue/1374/
+Solution Video: https://www.youtube.com/watch?v=__98uL6wst8
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        n = len(grid)
+        island_count = 0
+        for i in range(n):
+            for j in range(len(grid[i])):
+                if grid[i][j]=='1':
+                    island_count += 1
+                    self.grid_dfs(grid, i, j)
+        return island_count
+    
+    def grid_dfs(self, grid, i, j):
+        # Base cases for recursion:
+        # 1. row<0
+        # 2. row>=len(grid[i])
+        # 3. col<0
+        # 4. col>=len(grid[j])
+        # 5. if grid[i][j]!='1' 
+        # we simply return nothing, we don't need them more than handling these cases
+        if i<0 or i>=len(grid) or j<0 or j>=len(grid[i]) or grid[i][j]!='1':
+            return
+        grid[i][j] = 2
+        self.grid_dfs(grid, i, j-1)  # left
+        self.grid_dfs(grid, i, j+1)  # right
+        self.grid_dfs(grid, i-1, j)  # top
+        self.grid_dfs(grid, i+1, j)  # down/bottom
