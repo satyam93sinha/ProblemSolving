@@ -33,3 +33,44 @@ class Solution:
                 possible_dups -= 1
                 arr[j+possible_dups] = arr[j]
             j -= 1
+
+Briefly, if last element(i==length-zero_counts) is 0, rather considering it for duplication and incrementing zero_counts,
+we already modify the last element of array to 0 and decrement length so that we now work on length-1,
+without considering the length-zero_count element if it's 0.
+
+class Solution:
+    def duplicateZeros(self, arr: List[int]) -> None:
+        """
+        Do not return anything, modify arr in-place instead.
+        """
+        zero_counts, length = 0, len(arr)-1
+        for i in range(length+1):
+            if i>length-zero_counts:
+                # don't have to iterate over more than remaining element of the array
+                # array is already full with i==length-zero_counts
+                break
+            if arr[i] == 0:
+                if i==length-zero_counts:
+                    # if element is 0 and is the last element to be considered, arr[length-zero_count] is 0
+                    # and is considered
+                    arr[length] = 0
+                    # we set the last element of the array to 0 and as last element is already modified
+                    # we can't consider it for another modification thus, decrementing length and not
+                    # incrementing zero_counts.
+                    # Briefly, if last element(i==length-zero_counts) is 0, rather considering it for duplication
+                    # and incrementing zero_counts, we already modify the last element of array to 0 and
+                    # decrement length so that we now work on length-1, without considering the length-zero_count
+                    # element if it's 0.
+                    length -= 1
+                    break
+                zero_counts += 1
+        j = length-zero_counts
+        while j>=0 and zero_counts>0:
+            if arr[j]!=0:
+                arr[j+zero_counts] = arr[j]
+            else:
+                arr[j+zero_counts] = arr[j] # or 0
+                zero_counts -= 1
+                arr[j+zero_counts] = arr[j]
+            # print(arr)
+            j -= 1
