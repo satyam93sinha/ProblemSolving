@@ -1,0 +1,64 @@
+Question: https://leetcode.com/problems/min-stack/
+Explanation: https://www.geeksforgeeks.org/design-a-stack-that-supports-getmin-in-o1-time-and-o1-extra-space/
+
+Time: O(1) for every operation
+Space: O(1) for every operation
+
+push trick:
+if val is greater than min_val, current_val = 2*current_val - prev_min_val (unchanged min_val), else, simply push.
+
+pop trick:
+pop the element, if popped element is lesser than min_val, update min_val = 2*min_val - popped element, else, simply pop and do nothing.
+
+
+
+Solution:
+class MinStack:
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.min_stack = list()
+        self.min_val = float('-inf')
+
+    def push(self, val: int) -> None:
+        if not self.min_stack:
+            self.min_val = val
+            self.min_stack.append(val)
+        elif val > self.min_val:
+            self.min_stack.append(val)
+        else:
+            # val < self.min_val
+            val, self.min_val = 2*val-self.min_val, val
+            self.min_stack.append(val)
+        print(f"Push val:{val}, min_val:{self.min_val}")
+
+    def pop(self) -> None:
+        pop = self.min_stack.pop()
+        if pop > self.min_val:
+            return
+        else:
+            # pop < self.min_val
+            self.min_val = 2*self.min_val - pop
+
+    def top(self) -> int:
+        top = self.min_stack[-1]
+        print(f"Top:{top}, min_val:{self.min_val}")
+        if top > self.min_val:
+            return top
+        else:
+            # top < self.min_val
+            top = self.min_val
+            return top
+
+    def getMin(self) -> int:
+        return self.min_val
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(val)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
