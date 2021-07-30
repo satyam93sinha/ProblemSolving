@@ -1,0 +1,49 @@
+SLIDING WINDOW ::: FIRST NEGATIVE INTEGER IN EVERY WINDOW OF SIZE K
+
+Problem Statement:
+Given an array A[] of size N and a positive integer K, find the first negative integer for each and every window(contiguous subarray) of size K.
+
+Solution: https://www.geeksforgeeks.org/first-negative-integer-every-window-size-k/ ;; Time: O(n), Space: O(1)
+
+Important Points ==>
+1. first_negative_index stays in range(start, end)
+2. We increment/discard first negative index if it is
+  a. first negative index is not in range(start, end), i.e., first_negative_index < start of the current window
+  b. first negative index element is a positive integer, i.e., Array[first_negative_index] > 0, not negative. Also, first_negative_index here lies in range(start, end)
+
+
+
+
+def printFirstNegativeInteger( A, N, K):
+    # code here
+    result = list()
+    start = 0
+    end = K-1
+    first_negative_index = 0 # it stays in range (start, end)
+    while start < N-K+1 and end < N:
+        # first_negative_index can only be incremented until end-1 in a window
+        # so first_negative_index < end
+        # discarding first_negative_index cases are
+        # 1. first_negative_index <= prev_start
+        # 2. A[first_negative_index] > 0, i.e., positive number
+        '''Two Cases to keep finding/incrementing first negative index:
+        1. first_negative_index is below start, not in range(start, end)
+        2. first_negative_index is in range(start, end) and is positive integer
+        '''
+        while first_negative_index < start:
+            first_negative_index += 1
+        while start <= first_negative_index < end and A[first_negative_index] > 0:
+            first_negative_index += 1
+        """
+        while ((first_negative_index < end)
+                and (first_negative_index < start or A[first_negative_index] > 0)):
+            first_negative_index += 1
+        """
+        
+        if A[first_negative_index] < 0:
+            result.append(A[first_negative_index])
+        else:
+            result.append(0)
+        start += 1
+        end += 1
+    return result
