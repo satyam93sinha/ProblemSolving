@@ -1,0 +1,50 @@
+Explanation: IDeserve channel youtube
+Question Links: https://www.interviewbit.com/problems/palindrome-partitioning-ii/
+                https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1#
+
+
+
+
+
+class Solution:
+	# @param A : string
+	# @return an integer
+	def minCut(self, A):
+        n = len(A)
+        palindrome = [[False for _ in range(n)] for _ in range(n)]
+        # Single char palindromes
+        for row_col in range(n):
+            palindrome[row_col][row_col] = True
+        
+        # 2 char palindromes
+        for row_col in range(n-1):
+            # stores True if two char are equal else False
+            palindrome[row_col][row_col+1] = (A[row_col] == A[row_col + 1])
+        
+        # Building Palindromes :: 3 char and above palindromes
+        for string_len in range(3, n+1):
+            for row in range(n - string_len + 1):
+                col = row + string_len - 1
+                if (A[row] == A[col]
+                    and palindrome[row+1][col-1]):
+                    palindrome[row][col] = True
+        
+        # print("Palindrome:", palindrome)
+
+        cuts = [0 for _ in range(n)]
+        for string_len in range(n):
+            # if it is a palindrome, number of cuts for this char in string will be 0
+            if palindrome[0][string_len]:
+                cuts[string_len] = 0
+            
+            else:
+                temp = float('inf')
+                # cut at every possible char and check for minCut
+                for cut in range(string_len):
+                    if (palindrome[cut + 1][string_len]
+                        and temp > cuts[cut] + 1):
+                        temp = cuts[cut] + 1
+                cuts[string_len] = temp
+            # print("cuts:", cuts)
+        return cuts[n-1]
+    
