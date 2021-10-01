@@ -1,0 +1,155 @@
+Longest Increasing Subsequence
+
+Question:: 
+Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, [3,6,2,7] is a subsequence of the array [0,3,1,6,2,2,7].
+
+
+
+-- Solution Approaches --
+
+I. Brute Force: Generate all the subsequences and check if they are increasing subsequence or not, 
+    if increasing:
+      longest_increasing_subsequence = max(longest_increasing_subsequence, len(subsequence))
+    else:
+      move on/ skip this sequence
+
+II. Use Dynamic Programming to Optimize reoccurring substructure
+
+Algorithm
+
+Initialize an array dp with length nums.length and all elements equal to 1. dp[i] represents the length of the longest increasing subsequence that ends with the element at 
+index i.
+
+Iterate from i = 1 to i = nums.length - 1. At each iteration, use a second for loop to iterate from j = 0 to j = i - 1 (all the elements before i). For each element before i, check if that element is smaller than nums[i]. If so, set dp[i] = max(dp[i], dp[j] + 1).
+
+Return the max value from dp.
+
+--> Complexity Analysis
+
+Given NN as the length of nums,
+
+Time complexity: O(N^2)
+We use two nested for loops resulting in 1 + 2 + 3 + 4 + ... + N = {N * (N + 1)}/2 operations, resulting in a time complexity of O(N^2).
+
+Space complexity: O(N)
+The only extra space we use relative to input size is the dp array, which is the same length as nums.
+
+
+III. Intelligently Build a Subsequence
+
+Intuition
+
+As stated in the previous approach, the difficult part of this problem is deciding if an element is worth using or not. Consider the example nums = [8, 1, 6, 2, 3, 10]. Let's try to build an increasing subsequence starting with an empty one: sub = [].
+
+At the first element 8, we might as well take it since it's better than nothing, so sub = [8].
+
+At the second element 1, we can't increase the length of the subsequence since 8 >= 1, so we have to choose only one element to keep. Well, this is an easy decision, let's take the 1 since there may be elements later on that are greater than 1 but less than 8, now we have sub = [1].
+
+At the third element 6, we can build on our subsequence since 6 > 1, now sub = [1, 6].
+
+At the fourth element 2, we can't build on our subsequence since 6 >= 2, but can we improve on it for the future? Well, similar to the decision we made at the second element, if we replace the 6 with 2, we will open the door to using elements that are greater than 2 but less than 6 in the future, so sub = [1, 2].
+
+At the fifth element 3, we can build on our subsequence since 3 > 2. Notice that this was only possible because of the swap we made in the previous step, so sub = [1, 2, 3].
+
+At the last element 10, we can build on our subsequence since 10 > 3, giving a final subsequence sub = [1, 2, 3, 10]. The length of sub is our answer.
+
+It appears the best way to build an increasing subsequence is: for each element num, if num is greater than the largest element in our subsequence, then add it to the subsequence. Otherwise, perform a linear scan through the subsequence starting from the smallest element and replace the first element that is greater than or equal to num with num. This opens the door for elements that are greater than num but less than the element replaced to be included in the sequence.
+
+One thing to add: this algorithm does not always generate a valid subsequence of the input, but the length of the subsequence will always equal the length of the longest increasing subsequence. For example, with the input [3, 4, 5, 1], at the end we will have sub = [1, 4, 5], which isn't a subsequence, but the length is still correct. The length remains correct because the length only changes when a new element is larger than any element in the subsequence. In that case, the element is appended to the subsequence instead of replacing an existing element.
+
+### -> Algorithm
+
+Initialize an array sub which contains the first element of nums.
+
+Iterate through the input, starting from the second element. For each element num:
+
+If num is greater than any element in sub, then add num to sub.
+Otherwise, iterate through sub and find the first element that is greater than or equal to num. Replace that element with num.
+Return the length of sub.
+
+==> Complexity Analysis
+
+Given NN as the length of nums,
+
+Time complexity: O(N^2)
+
+This algorithm will have a runtime of O(N^2) only in the worst case. 
+Consider an input where the first half is [1, 2, 3, 4, ..., 99998, 99999], then the second half is [99998, 99998, 99998, ..., 99998, 99998]. 
+We would need to iterate (N / 2)^2 times for the second half because there are N / 2N/2 elements equal to 99998, and a linear scan for each one takes (N/2) iterations. 
+This gives a time complexity of O(N^2)
+
+Despite having the same time complexity as the previous approach, in the best and average cases, it is much more efficient.
+
+Space complexity: O(N)
+When the input is strictly increasing, the sub array will be the same size as the input.
+
+IV. Improve with Binary Search
+
+Intuition
+
+In the previous approach, when we have an element num that is not greater than all the elements in sub, we perform a linear scan to find the first element in sub 
+that is greater than or equal to num. Since sub is in sorted order, we can use binary search instead to greatly improve the efficiency of our algorithm.
+
+CODE:
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        subsequence = [nums[0]]
+        for num in nums[1:]:
+            if num > subsequence[-1]:
+                subsequence.append(num)
+            else:
+                start, end = 0, len(subsequence) - 1
+                while start < end:
+                    mid = (start + end) // 2
+                    """
+                    if subsequence[mid] == num:
+                        start = mid
+                        break
+                    """
+                    if subsequence[mid] < num:
+                        start = mid + 1
+                    else:
+                        end = mid
+                subsequence[start] = num
+        return len(subsequence)
+        
+        
+        """
+        # Time: O(n^2) for best/average/worst case, Space: O(n)
+        dp = [1 for _ in range(len(nums))]
+        
+        for increasing_subseq, inc_num in enumerate(nums):
+            for comparing_seq in range(increasing_subseq):
+                if (nums[increasing_subseq] > nums[comparing_seq]
+                    and dp[increasing_subseq] <= dp[comparing_seq]):
+                    dp[increasing_subseq] = 1 + dp[comparing_seq]
+        return max(dp)
+        """
+        """
+        # Time: O(n^2) only in worst case else O(n*len(subsequence))
+        # Space: O(n) in worst case else O(len(subsequence))
+        if not nums:
+            return 0
+        
+        # initialize sub array containing first element of nums
+        subsequence = [nums[0]]
+        # iterate through the input, starting from the second element of nums
+        for num in nums[1:]:
+            # if num is greater than last element of subsequence(has increasing elements), we simply append new element num to subsequence
+            if num > subsequence[-1]:
+                subsequence.append(num)
+            else:
+                # else, we need to replace the first greater element of subsequence with num
+            # Why above line is correct?
+            # bcoz we still compare current num with last element of subsequence, so if subsequence[-1] gets replaced we already have increasing subsequence else if new element gets added, we know it can be added with remaining elements giving us the correct length of longest_increasing_subsequence
+            
+                start = 0
+                while subsequence[start] < num:
+                    start += 1
+                # we found the index in subsequence which is greater than num, replace it
+                subsequence[start] = num
+        return len(subsequence)
+        """
