@@ -38,20 +38,22 @@ Space: O(2^n) bcoz the output array/list contains at most 2^n elements
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         
-        def dfs(index: int, current_output: List[int]) -> None:
+        def dfs(index=0, current=[]):
+            # base condition, index is greater or equal to length
+            # to avoid IndexError
             if index >= len(nums):
-                output.append(current_output.copy())
+                output.append(current.copy())
             else:
                 # include
-                current_output.append(nums[index])
-                dfs(index+1, current_output)
-                current_output.pop()
+                current.append(nums[index])
+                # recursively call dfs
+                dfs(index+1, current)
+                # to exclude, pop the last element
+                current.pop()
                 
                 # exclude
-                dfs(index+1, current_output)
+                dfs(index+1, current)
         
         output = []
-        index, current_output = 0, []
-        dfs(index, current_output)
+        dfs()
         return output
-                
