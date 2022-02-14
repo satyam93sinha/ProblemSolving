@@ -1,22 +1,40 @@
+"""
+Edge Cases:
+1. Single element; return 0
+2. Ascending order; return difference of last element and first one
+3. Descending order; return 0
+4. Same element throughout the array; return 0
+
+Approaches:
+1. Brute Force
+Intuition:
+Iterate through every element of the array and check for max difference between elements.
+Time: O(n^2)
+Space: O(1)
+
+2. Use Stack
+Intuition:
+We iterate backwards and keep the maximum element as we encounter it in stack maintaining a result array storing max_element for that element at that particular location. Later, we find difference between result array and input array then finding the max difference element.
+Time: O(n) we iterate 3 times over the array but it will be linear.
+Space: O(n) we have a stack which can grow until n-size in worst case
+
+3. Maintain a min_element and max_difference/current_max
+Intuition:
+We can maintain a min_element as we encounter any minimum element lesser than current_min we update it and keep track of max_difference/max_profit by checking/storing max difference in max_profit.
+Time: O(n)
+Space; O(1)
+"""
+
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        next_greater = self.next_greater(prices)
-        difference = [next_greater[index] - prices[index] for index in range(len(prices))]
-        return max(difference)
-    
-    def next_greater(self, prices: List[int]) -> List[int]:
-        stack = []
-        next_greater_element = [-1 for _ in range(len(prices))]
-        for index in range(len(prices)-1, -1, -1):
-            while stack and prices[index] >= stack[-1]:
-                stack.pop()
-            if not stack:
-                next_greater_element[index] = prices[index]
-                stack.append(prices[index])
-            else:
-                next_greater_element[index] = stack[-1]
-            
-            if prices[index] >= stack[-1]:
-                stack.append(prices[index])
+        min_element = prices[0]
+        max_profit = 0
+        for price in prices:
+            # keep track of min_element as we iterate over prices
+            if price < min_element:
+                min_element = price
+            # account for max_profit and keep it updated
+            elif max_profit < price-min_element:
+                max_profit = max(max_profit, price-min_element)
         
-        return next_greater_element
+        return max_profit
