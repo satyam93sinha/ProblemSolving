@@ -18,32 +18,37 @@ Design a Recursive Tree using I/P-O/P Method and then code. Maintain a current_s
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         
-        def combinations(index=0, current_result=[], current_sum=0):
-            # base condition
+        def combination_subset(index=0, current_output=[], current_sum=0):
+            # base conditions
+            # 1. if sum == target
             if current_sum == target:
-                output.append(current_result.copy())
+                output.append(current_output.copy())
                 return
+            # 2. if current_sum > target, we can never find the target bcoz
+            # here the array contains only positive numbers
             if current_sum > target:
                 return
+            # 3. to ensure we do not go beyond len(candidates)
+            # to avoid IndexError
             if index >= len(candidates):
                 return
             
-            # Hypothesis, searching for subsequences for smaller input
-            # by deciding to include or exclude an element and consequently
-            # input automatically gets small
+            # Hypothesis
+            # include same number infinite number of times without ...
+            # incrementing index and add it to sum
+            current_output.append(candidates[index])
+            combination_subset(index, current_output,
+                              current_sum + candidates[index])
+            current_output.pop()
             
-            # include, we can pick same elements multiple number of times
-            current_result.append(candidates[index])
-            combinations(index, current_result,
-                         current_sum + candidates[index])
-            current_result.pop()
-            
-            # exclude
-            combinations(index+1, current_result, current_sum)
-            
+            # exclude the current index, do not add it to current_output
+            # increment index so that the next element can be added to ..
+            # current_output and sum in the next recursion ...
+            # including this candidate infinite number of times as above
+            combination_subset(index+1, current_output, current_sum)
+    
         output = []
-        combinations()
+        combination_subset()
         return output
-        
         
         
