@@ -28,6 +28,24 @@ class Solution:
         # Approach4: Time-O(logm + logn), Space: O(1)
         row_start, row_end = 0, len(matrix)-1
         while row_start <= row_end:
+            # find mid
+            mid_row = (row_start + row_end) // 2
+            if matrix[mid_row][0] <= target <= matrix[mid_row][-1]:
+                return self.binary_search(matrix[mid_row], target)
+            elif matrix[mid_row][0] > target:
+                row_end = mid_row - 1
+            else:
+                row_start = mid_row + 1
+        return False
+        
+        
+        
+        
+        
+        
+        """
+        row_start, row_end = 0, len(matrix)-1
+        while row_start <= row_end:
             mid_row = (row_start + row_end) // 2
             if matrix[mid_row][0] <= target <= matrix[mid_row][-1]:
                 # we found row containing target, search in this row/array
@@ -40,6 +58,7 @@ class Solution:
                 row_start = mid_row + 1
         # target not found, row_start > row_end
         return False
+        """
         
         """
         # Approach3: Time: O(m + logn)
