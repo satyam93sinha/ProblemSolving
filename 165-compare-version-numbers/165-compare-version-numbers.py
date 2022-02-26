@@ -13,6 +13,7 @@ Test Cases:
 5. version1 = 1.1.2, version2 = 1.1.2.1 ; return -1
 6. version1 = 1.2.3, version2 = 1.2.1 ; return 1
 7. version1 = 1.0, version2 = 1.0.0 ; return 0
+8. version1 = 1.0.1, version2 = 1.0.2 ; return -1
 
 Approaches:
 1. Brute Force
