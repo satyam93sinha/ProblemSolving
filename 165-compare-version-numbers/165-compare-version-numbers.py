@@ -16,15 +16,53 @@ Test Cases:
 8. version1 = 1.0.1, version2 = 1.0.2 ; return -1
 
 Approaches:
-1. Brute Force
+1. Brute Force :: Two/Three Passes
 Intuition:
-Split the version string based on dot(it is now in a list). Convert list to integers and then, compare them.
-Time: O(n) iterating over the whole input versions
-Space: O(n) if considering the list of integers formed from versions given
+Split the version string based on dot(it is now in a list). Convert list to integers and then, compare them. We can have zeros towards the end and need to avoid them so better, we delete/pop or add more zeros to equal versions' list's length, before proceeding with the solution.
+Time: O(n + m) iterating over the whole input versions
+Space: O(n + m) if considering the list of integers formed from versions given
+
+2. Optimised :: Single Pass
+Intuition:
+Iterate over the version strings and get the chunk between two dots and compare them.
+Time: O(max(n, m)) we will compare until we reach end of longest version length
+Space: O(max(n, m)) we need substring of input for converting it to integer, string slice takes this space
 """
 
 class Solution:
     def compareVersion(self, version1: str, version2: str) -> int:
+        length1, length2 = len(version1), len(version2)
+        index1 = index2 = 0
+        while index1 < length1 or index2 < length2:
+            index1, version1_num = self.get_chunk(version1, index1, length1)
+            index2, version2_num = self.get_chunk(version2, index2, length2)
+            if version1_num != version2_num:
+                return -1 if version1_num < version2_num else 1
+        
+        # versions are equal
+        return 0
+    
+    def get_chunk(self, version, index, length):
+        if index >= length:
+            return index, 0
+        
+        index_end = index
+        num = ''
+        while index_end < length and version[index_end] != '.':
+            num += version[index_end]
+            index_end += 1
+        num = int(num)
+        index = index_end + 1
+        return index, num
+        
+        
+        
+        
+        
+        
+        
+        
+        """
         version1_list = list(map(int, version1.split('.')))
         version2_list = list(map(int, version2.split('.')))
         equal_count = 0
@@ -62,5 +100,4 @@ class Solution:
             return -1
         if equal_count == len(version1_list) == len(version2_list):
             return 0
-        
-        
+        """
