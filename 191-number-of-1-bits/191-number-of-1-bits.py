@@ -8,8 +8,8 @@ Approaches:
 1. Brute Force
 Intuition:
 Use inbuilt binary representation of a number and convert number to its bin. Iterate over the bin and count total number of 1s.
-Time: O(bin(n))
-Space: O(bin(n))
+Time: O(bin(n)) => O(32) => O(1)
+Space: O(bin(n)) => O(32) => O(1)
 """
 class Solution:
     def hammingWeight(self, n: int) -> int:
