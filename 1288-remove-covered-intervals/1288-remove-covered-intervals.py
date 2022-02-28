@@ -5,4 +5,4 @@ class Solution:
         for i, j in A:
             res += j > right
             right = max(right, j)
-        return res    
+        return res        
