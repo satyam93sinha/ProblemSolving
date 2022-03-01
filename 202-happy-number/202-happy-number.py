@@ -1,13 +1,18 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        hashset = set()
-        while n != 1 and n > 0:
-            hashset.add(n)
+        # Time: O(logn)
+        # Space: O(1)
+        def get_next_number(num):
             square_sum = 0
-            while n > 0:
-                square_sum += pow(n % 10, 2)
-                n //= 10
-            n = square_sum
-            if n in hashset:
-                return False
-        return True
+            while num > 0:
+                num, digit = divmod(num, 10)
+                square_sum += pow(digit, 2)
+            return square_sum
+        
+        # cycle members : {4, 16, 37, 58, 89, 145, 42, 20}
+        # all the digit square of 4 form a cycle
+        
+        while n != 1 and n != 4:
+            n = get_next_number(n)
+        
+        return n == 1
