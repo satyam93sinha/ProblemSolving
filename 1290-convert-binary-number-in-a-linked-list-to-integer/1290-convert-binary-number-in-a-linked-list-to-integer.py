@@ -5,6 +5,13 @@
 #         self.next = next
 class Solution:
     def getDecimalValue(self, head: ListNode) -> int:
+        num = head.val
+        while head.next:
+            num = (num << 1) + head.next.val
+            head = head.next
+        return num
+        
+        """
         # binary representation
         # notice: 110 
         # 1*2 + 1 => 3
@@ -15,6 +22,7 @@ class Solution:
             num = num * 2 + head.next.val
             head = head.next
         return num
+        """
         
         """
         length = 0
