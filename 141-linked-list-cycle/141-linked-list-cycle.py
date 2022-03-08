@@ -12,4 +12,5 @@ class Solution:
             hare = hare.next.next
             if tortoise == hare:
                 return True
+        
         return False
