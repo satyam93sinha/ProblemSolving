@@ -18,7 +18,7 @@ Intuition: check every element of matrix and compare with target, if found retur
 Time: O(m*n)
 Space: O(1)
 
-2. Use Binary Search on every row to find if target exists
+2. Not Possible in this Question, use in Search a 2D Matrix :: Use Binary Search on every row to find if target exists
 Time: O(m*log(n))
 Space: O(1)
 
