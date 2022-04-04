@@ -5,6 +5,14 @@ Edge Cases:
 3. length(linked list) > 1
     3.1 nodes to be swapped are head and tail nodes
     3.2 nodes to be swapped are neither head nor tail nodes
+    3.3 nodes to be swapped are same from beginning and from end
+
+Test Cases:
+1. []; not allowed to be passed as test case
+2. [1], k = 1; return head
+3.1 [1, 2, 3, 4], k = 1; return [4, 3, 2, 1]
+3.2 [1, 2, 3, 4], k = 2; return [1, 3, 2, 4]
+3.3 [1, 2, 3, 4, 5], k = 3; return [1, 2, 3, 4, 5]
 
 Approaches:
 1. Brute Force, use dummy node to not worry about handling swap of head and tail nodes and not get a None has no next exception
