@@ -1,6 +1,6 @@
 """
 Edge Cases:
-1. nums is empty; so no kth largest element can be found
+1. nums is empty, add new elements and find kth largest element
 2. len(nums) == 1; we can have only one kth largest element provided k<=len(nums); return nums[0]
 3. len(nums) >= 2; find kth largest element and return that integer value
     3.1 the stream happens only once, return kth largest element directly
