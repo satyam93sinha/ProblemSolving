@@ -29,8 +29,14 @@ Space: O(n), for storing key value pairs of num and frequency
 """
 
 class Solution:
+    
+    def __init__(self):
+        self.nums = []
+        self.nums_frequency_dict = {}
+        self.k = 0
+    
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        
+        """
         # Approach2 : Using Heap
         # stores num and its respective frequency
         nums = collections.Counter(nums)
@@ -45,19 +51,37 @@ class Solution:
             heap[index] = heap_element[1]
         
         return heap
-        
+        """        
         # Approach3 : Using Hoare's Selection/Quick Select
-        nums_frequency_dict = collections.Counter(nums)
-        nums = nums_frequency_dict.keys()
+        self.nums_frequency_dict = collections.Counter(nums)
+        self.nums = list(set(nums))
+        self.k = len(self.nums)-k
+        return self.quick_select(0, len(self.nums)-1)
+        # print(self.nums)
+        # return self.nums[self.k:]
         
-    def quick_select(self, nums_frequency_dict: dict, nums: List[int], k: int) -> List[int]:
-        partition_key_index = self.partition(nums_frequency_dict, nums)
-        if partition_key_index < k:
-            self.partition(nums_frequency_dict, nums[partition_key_index+1:])
-        elif partition_key_index > k:
-            self.partition(nums_frequency_dict, nums[:partition_key_index])
+    def quick_select(self, start: int, end: int) -> List[int]:
+        if start > end:
+            return
+        partition_key_index = self.partition(start, end)
+        if partition_key_index < self.k:
+            return self.quick_select(partition_key_index+1, end)
+        elif partition_key_index > self.k:
+            return self.quick_select(start, partition_key_index-1)
         else:
-            return nums[:k]
+            return self.nums[self.k:]
     
-    def partition(self, nums_frequency_dict: dict, nums: List[int]):
-        pass
+    def partition(self, start: int, end: int) -> int:
+        random_index = random.randint(start, end)
+        self.nums[random_index], self.nums[end] = self.nums[end], self.nums[random_index]
+        pivot = self.nums_frequency_dict[self.nums[end]]
+        pivot_index = start
+        while start < end:
+            if self.nums_frequency_dict[self.nums[start]] <= pivot:
+                self.nums[start], self.nums[pivot_index] = self.nums[pivot_index], self.nums[start]
+                pivot_index += 1
+            start += 1
+            
+        
+        self.nums[pivot_index], self.nums[end] = self.nums[end], self.nums[pivot_index]
+        return pivot_index
