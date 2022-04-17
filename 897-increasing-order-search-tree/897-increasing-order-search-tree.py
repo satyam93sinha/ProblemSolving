@@ -5,25 +5,18 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def __init__(self):
-        self.inorder_BST_array = []
-    
     def increasingBST(self, root: TreeNode) -> TreeNode:
-        if not root:
-            return
+        def inorder(node):
+            if not node:
+                return None
+            inorder(node.left)
+            # change nodes, build answer
+            node.left = None
+            self.current.right = node
+            self.current = node
+            
+            inorder(node.right)
         
-        self.inorder_BST(root) # array containing sorted elements is built
-        dummy = current = TreeNode()
-        
-        for value in self.inorder_BST_array:
-            current.right = TreeNode(value)
-            current = current.right
-        
-        return dummy.right
-    
-    def inorder_BST(self, root: TreeNode):
-        if not root:
-            return None
-        self.inorder_BST(root.left)
-        self.inorder_BST_array.append(root.val)
-        self.inorder_BST(root.right)
+        answer = self.current = TreeNode(-1)
+        inorder(root)
+        return answer.right
