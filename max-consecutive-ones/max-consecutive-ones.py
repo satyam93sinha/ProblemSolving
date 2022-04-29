@@ -32,6 +32,31 @@ Space: O(1)
 class Solution:
     def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
         consecutive_1s = 0
+        max_consecutive_1s = float('-inf')  # it can also be 0, because there won't be negative counts
+        for num in nums:
+            if num:  # num == 1
+                consecutive_1s += 1
+            else:
+                consecutive_1s = 0
+            max_consecutive_1s = max(max_consecutive_1s, consecutive_1s)
+        
+        return max_consecutive_1s
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        """
+        consecutive_1s = 0
         max_consecutive_1s = 0
         for num in nums:
             if num == 1:
@@ -41,3 +66,4 @@ class Solution:
                 consecutive_1s = 0
             
         return max_consecutive_1s
+        """
