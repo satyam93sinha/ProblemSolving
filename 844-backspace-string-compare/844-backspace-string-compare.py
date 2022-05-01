@@ -22,26 +22,29 @@ Intuition: Keep a stack for s and t and append elements until there's a "#" back
 Time: O(len(s) + len(t))
 Space: O(len(s) + len(t)); for stack
 
+2. Two Pointer
+Intuition: Iterate on characters in reverse order and skip char that appears before "#". Build a string through this and compare its reverse.
+Time: O(len(s) + len(t))
+Space: O(len(s) + len(t))
+
+3. Two Pointer, Space Optimized
+Intuition: Use Approach-2 with skip count and generator
+Time: O(len(s) + len(t))
+Space: O(1)
+
 """
 
 class Solution:
     def backspaceCompare(self, s: str, t: str) -> bool:
-        if s == t:  # edge case
-            return True
-        stack_s = []
-        stack_t = []
-        for char in s:
-            if char == "#":
-                if stack_s:
-                    stack_s.pop()
-            else:
-                stack_s.append(char)
         
-        for char in t:
-            if char == "#":
-                if stack_t:
-                    stack_t.pop()
-            else:
-                stack_t.append(char)
-        print(stack_s, stack_t)
-        return stack_s == stack_t
+        def F(string):
+            skip_char = 0  # skip a char due to backspace
+            for char in reversed(string):
+                if char == "#":
+                    skip_char += 1
+                elif skip_char:  # char is being skipped so decrementing it to make it back to 0
+                    skip_char -= 1
+                else:  # char to be considered
+                    yield char
+        
+        return all(char_s == char_t for char_s, char_t in itertools.zip_longest(F(s), F(t)))
