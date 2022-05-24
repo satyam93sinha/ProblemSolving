@@ -9,13 +9,14 @@ class Solution:
         for index in range(n-1, -1, -1):
             while stack and stack[-1] <= arr[index]:
                 stack.pop()
+            temp = arr[index]
             if not stack:
-                answer[index] = -1
+                arr[index] = -1
             else:
-                answer[index] = stack[-1]
+                arr[index] = stack[-1]
             
-            stack.append(arr[index])
-        return answer
+            stack.append(temp)
+        return arr
 
 #{ 
 #  Driver Code Starts
