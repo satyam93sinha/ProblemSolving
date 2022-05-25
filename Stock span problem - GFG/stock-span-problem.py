@@ -13,14 +13,15 @@ class Solution:
             while stack and stack[-1][0] <= a[index]:
                 stack.pop()
             if not stack:
-                answer[index] = -1
+                answer[index] = index - (-1)
             else:
-                answer[index] = stack[-1][1]
+                answer[index] = index - stack[-1][1]
             stack.append([a[index], index])
         
         # calculate index difference of current index and next greater element to left's index
-        for index in range(n):
+        """for index in range(n):
             answer[index] = index - answer[index]
+        """
         
         return answer
 
