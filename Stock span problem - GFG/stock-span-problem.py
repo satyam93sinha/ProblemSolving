@@ -8,6 +8,7 @@ class Solution:
         #code here
         stack = []
         answer = [0 for _ in range(n)]
+        # Calculate next greater element to left of the given element
         for index in range(n):
             while stack and stack[-1][0] <= a[index]:
                 stack.pop()
@@ -17,6 +18,7 @@ class Solution:
                 answer[index] = stack[-1][1]
             stack.append([a[index], index])
         
+        # calculate index difference of current index and next greater element to left's index
         for index in range(n):
             answer[index] = index - answer[index]
         
