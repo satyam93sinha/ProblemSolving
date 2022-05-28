@@ -4,7 +4,7 @@ class Solution:
         if hashmap.get(0, 0) > 1:
             return True
         for num, count in hashmap.items():
-            if (hashmap.get(num/2, 0) or hashmap.get(num*2, 0)) and num != 0:
+            if hashmap.get(num*2, 0) and num != 0:
                 return True
         return False
         hashmap = {}
