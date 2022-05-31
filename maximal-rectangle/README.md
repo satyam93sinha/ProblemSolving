@@ -1,3 +1,4 @@
+[Discussion Post (created on 31/4/2022 at 10:9)](https://leetcode.com/problems/maximal-rectangle/discuss/2093031/Think-it-through-oror-Time%3A-O(rows-x-cols)-Space%3A-O(cols)-oror-Python-Explained)  
 <h2>85. Maximal Rectangle</h2><h3>Hard</h3><hr><div><p>Given a <code>rows x cols</code>&nbsp;binary <code>matrix</code> filled with <code>0</code>'s and <code>1</code>'s, find the largest rectangle containing only <code>1</code>'s and return <em>its area</em>.</p>
 
 <p>&nbsp;</p>
