@@ -1,27 +1,30 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-        max_right = self.max_right(height.copy())
-        max_left = self.max_left(height)
-        print(max_right, max_left, height)
-        for index in range(len(height)):
-            water_trapped = min(max_right[index], max_left[index]) - height[index]
-            height[index] = water_trapped
-        return sum(height)
-    
-    def max_left(self, height: List[int]) -> List[int]:
-        max_ = 0
-        max_left = [0 for _ in range(len(height))]
-        for index, height_ in enumerate(height):
-            max_ = max(max_, height_)
-            max_left[index] = max_
+        # Edge case
+        if len(height) < 3:
+            return 0
         
-        return max_left
-    
-    def max_right(self, height: List[int]) -> List[int]:
-        max_ = 0
-        for index in range(len(height)-1, -1, -1):
-            height_ = height[index]
-            max_ = max(max_, height_)
-            height[index] = max_
+        # Time: O(n), Space: O(1) using two pointer approach
+        # for explanation check Tech Dose youtube video
+        max_left = max_right = 0
+        left, right = 0, len(height) - 1
+        trapped_water = 0
+        while left < right:
+            # go from left to right
+            if height[left] <= height[right]:
+                if height[left] > max_left:
+                    max_left = height[left]
+                else:
+                    water_level = max_left
+                    trapped_water += (water_level - height[left]) * 1
+                left += 1
+			# go from right to left
+            else:
+                if height[right] > max_right:
+                    max_right = height[right]
+                else:
+                    water_level = max_right
+                    trapped_water += (water_level - height[right]) * 1
+                right -= 1
         
-        return height
+        return trapped_water
