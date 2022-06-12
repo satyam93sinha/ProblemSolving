@@ -19,10 +19,8 @@ Maintain a left and right pointers, find a mid num or pivot which is less than i
 Algorithm:
 Step1 -> left, right = 0, len(nums) - 1
 Step2 -> Iterate until left < right
-Step3 -> Check if mid element is pivot, ensure to handle mid == 0 or mid == len(nums)-1. If so, break the loop or return this element as min element
-Step4 -> Check if right half is sorted
-Step4.1 -> If left half is sorted then, check if complete array is sorted by checking nums[left] <= nums[mid] <= nums[right]. If so, go towards left, right = mid else go right(is unsorted) right = mid + 1
-Step4.2 -> Else check if left to right is sorted => right = mid ;; else, left = mid + 1
+Step3.1 -> If left half is sorted then, check if complete array is sorted by checking nums[left] <= nums[mid] <= nums[right]. If so, go towards left, right = mid else go right(is unsorted) left = mid + 1
+Step4.2 -> Else(left-half is not sorted, right-half could or could not be sorted) go left, right = mid
 Step5 -> return left(here, left == right)
 """
 
@@ -39,10 +37,6 @@ class Solution:
                     left = mid + 1
             else:
                 right = mid
-                # if nums[mid] <= nums[right]:
-                #     right = mid
-                # else:
-                #     left = mid + 1
         return nums[left]
         
         
