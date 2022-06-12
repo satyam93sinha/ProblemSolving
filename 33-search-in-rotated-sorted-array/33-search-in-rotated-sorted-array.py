@@ -49,6 +49,9 @@ class Solution:
         left, right = 0, len(nums) - 1
         while left < right:
             mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            
             # left half is sorted
             if nums[left] <= nums[mid]:
                 if nums[left] <= target <= nums[mid]:
@@ -58,7 +61,7 @@ class Solution:
             # right half should be sorted
             else:
                 # check target present in right half
-                if nums[mid] < target <= nums[right]:
+                if nums[mid] <= target <= nums[right]:
                     left = mid + 1
                 else:
                     right = mid
