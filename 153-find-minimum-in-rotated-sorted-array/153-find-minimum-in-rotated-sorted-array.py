@@ -38,8 +38,9 @@ class Solution:
                 else:
                     left = mid + 1
             else:
-                if nums[mid] <= nums[right]:
-                    right = mid
+                right = mid
+                # if nums[mid] <= nums[right]:
+                #     right = mid
                 # else:
                 #     left = mid + 1
         return nums[left]
