@@ -42,11 +42,10 @@ class Solution:
         left = bisect.bisect_left(nums, target, 0, len(nums))
         right = bisect.bisect_right(nums, target, left, len(nums))
         if left == right:
-            if left < len(nums) and right < len(nums) and nums[left] == target:
-                left = right = left
-            else:
+            if left >= len(nums) or nums[left] != target:
                 left = -1
                 right = 0
+                
         return [left, right-1]
 
 '''
