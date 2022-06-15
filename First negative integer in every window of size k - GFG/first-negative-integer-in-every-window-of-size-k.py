@@ -6,26 +6,25 @@ def printFirstNegativeInteger( A, N, K):
     start, end = 0, 0
     queue = collections.deque()
     answer = []
-    while end < K:
-        if A[end] < 0:
-            queue.append(A[end])
-        end += 1
-    if queue:
-        answer.append(queue[0])
-    else:
-        answer.append(0)
     
     while end < N:
         if A[end] < 0:
             queue.append(A[end])
-        if queue and A[start] == queue[0]:
-            queue.popleft()
-        if queue:
-            answer.append(queue[0])
+        if end - start + 1 < K:
+            end += 1
         else:
-            answer.append(0)
-        start += 1
-        end += 1
+            # calculation
+            # end - start + 1 == K
+            if queue:
+                answer.append(queue[0])
+            else:
+                answer.append(0)
+            # remove start from calculation
+            if queue and A[start] == queue[0]:
+                queue.popleft()
+            # slide the window
+            start += 1
+            end += 1
     
     return answer
 
