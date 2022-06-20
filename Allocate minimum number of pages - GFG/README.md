@@ -1,9 +1,9 @@
 # Allocate minimum number of pages
 ## Hard 
 <div class="problem-statement">
-                <p></p><p><span style="font-size:18px">You are given <strong>N </strong>number of books. Every <strong>ith</strong> book has<strong> Ai</strong> number of pages and are arranged in <strong>sorted order</strong>.<br>
+                <p></p><p><span style="font-size:18px">You are given <strong>N </strong>number of books. Every <strong>ith</strong> book has<strong> Ai</strong> number of pages.&nbsp;The books are arranged in ascending order.</span><br>
 <br>
-You have to allocate contagious books to <strong>M </strong>number of students. There can be many ways or permutations to do so. In each permutation, one of the M students will be allocated the maximum number of pages. Out of all these permutations, the task is to find that particular permutation in which the maximum number of pages allocated to a student is minimum of those in all the other permutations and print this minimum value.</span></p>
+<span style="font-size:18px">You have to allocate contiguous&nbsp;books to <strong>M </strong>number of students. There can be many ways or permutations to do so. In each permutation, one of the M students will be allocated the maximum number of pages. Out of all these permutations, the task is to find that particular permutation in which the maximum number of pages allocated to a student is the minimum of those in all the other permutations and print this minimum value.</span></p>
 
 <p><span style="font-size:18px">Each book will be allocated to exactly one student. Each student has to be allocated at least one book.</span></p>
 
