@@ -52,8 +52,8 @@ class Solution:
                 pages = 0
             pages += array[index]
         
-        if allocated_students > students:
-            return False
+            if allocated_students > students:
+                return False
         return True
 
 #{ 
