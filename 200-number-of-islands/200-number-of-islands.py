@@ -37,6 +37,23 @@ Space: O(m x n)
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         
+        def dfs(row, col):
+            # dfs means recursive or stack data structure can be used
+            visited.add((row, col))
+            # up, down, left, right
+            directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+            
+            for delta_row, delta_col in directions:
+                new_row, new_col = row + delta_row, col + delta_col
+                # ensure new_row and new_col are within array bounds,
+                # grid element at this new location is "1",
+                # and not yet visited
+                if (0 <= new_row < rows 
+                    and 0 <= new_col < cols
+                    and grid[new_row][new_col] == "1"
+                    and (new_row, new_col) not in visited):
+                    dfs(new_row, new_col)
+        
         def bfs(row, col):
             # bfs means use a queue data structure
             queue = collections.deque()
@@ -73,7 +90,10 @@ class Solution:
                 if grid[row][col] == "1" and (row, col) not in visited:
                     # perform a bfs to search for adjacent land and count them as
                     # single island
-                    bfs(row, col)
+                    # bfs(row, col)
+                    # now, perform a dfs to search for adjacent land and count them as
+                    # single island
+                    dfs(row, col)
                     islands += 1
         # return total number of islands found
         return islands
