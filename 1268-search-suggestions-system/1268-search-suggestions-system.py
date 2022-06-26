@@ -15,78 +15,46 @@ Intuition:
 Design a trie and then check if the char present in searchWord returns true when checked for startsWith. If true, crawl level by level in trie and append the whole word to answer, this will run three times because we need at most three such words/products in every answer
 Time: O(len(searchWord) * len(word))
 Space: O(26*n) => O(1)
+
+3. Use two pointer
+Intuition:
+Sort the products array so that all the words are lexicographically aligned. Point left and right index at their correct position where the word starting with given char in searchWord could be found. Later, append the product to the result.
+Time: O(n^2) -> len(searchWord) * len(products)
+Space: O(len(answer)) if considering answer as extra space
 """
 
-class TrieNode:
-    def __init__(self):
-        self.children = [None for _ in range(26)]
-        self.end_of_word = False
-
-class Trie:
-    def __init__(self):
-        self.root = self.create_trie_node()
-    
-    def create_trie_node(self):
-        return TrieNode()
-    
-    def char_to_index(self, char: str) -> int:
-        return ord(char) - ord('a')
-    
-    def insert(self, word: str) -> None:
-        crawl = self.root
-        for char in word:
-            index = self.char_to_index(char)
-            if not crawl.children[index]:
-                crawl.children[index] = self.create_trie_node()
-            crawl = crawl.children[index]
-        crawl.end_of_word = True
-    
-    def starts_with(self, prefix: str) -> bool:
-        crawl = self.root
-        for char in prefix:
-            index = self.char_to_index(char)
-            if not crawl.children[index]:
-                return None
-            crawl = crawl.children[index]
-        return crawl
-    
-    def get_words_starting_with(self, prefix: str) -> List[str]:
-        crawl = self.starts_with(prefix)
-        if crawl:
-            result = self.dfs_with_prefix(crawl, prefix, [])
-            return result
-    
-    def dfs_with_prefix(self, crawl, word, result):
-        if len(result) == 3:
-            return result
-        if crawl.end_of_word:
-            result.append(word)
-        
-        # dfs on all possible paths
-        for index in range(26):
-            char = chr(ord('a') + index)
-            if crawl.children[index]:
-                self.dfs_with_prefix(crawl.children[index], word+char, result)
-        
-        return result
-    
-
 class Solution:
-    def __init__(self):
-        self.trie_ds = Trie()
-    
-    def build_trie(self, products: List[str]) -> None:
-        for product in products:
-            self.trie_ds.insert(product)
     
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
-        # build trie data structure
-        self.build_trie(products)
-        
-        # check for starts_with for every char sequence of searchWord
         answer = []
-        prefix = ''
-        for char in searchWord:
-            prefix += char
-            answer.append(self.trie_ds.get_words_starting_with(prefix))
+        # sort products
+        products.sort()
+        # initialise left and right pointers
+        left, right = 0, len(products) - 1
+        # iterate over searchWord
+        for index, char in enumerate(searchWord):
+            # exclude all the words/product that doesn't start with
+            # searchWord char
+            # as products is sorted, we will get all the product
+            # together at a place
+            while (left <= right 
+                   and (len(products[left]) <= index
+                   or products[left][index] != char)):
+                left += 1
+            # shrinking the window size of word to consider in answer
+            # left to right is the window where we can find answer
+            # len(products[right]) <= index so that IndexError/out of bounds exception is not thrown
+            while (left <= right
+                  and (len(products[right]) <= index
+                  or products[right][index] != char)):
+                right -= 1
+            # total length present or to consider
+            # total number of words matching the prefix searchWord chars
+            length = right - left + 1
+            current_answer = []
+            # if we simply append(left: left+3) it may append those products that do not have searchWord prefix so we need to append only those that are in range left to right and not more than 3
+            for word_index in range(min(3, length)):
+                current_answer.append(products[left + word_index])
+            answer.append(current_answer)
         return answer
+        
