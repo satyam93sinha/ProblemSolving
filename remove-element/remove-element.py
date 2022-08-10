@@ -15,16 +15,15 @@ Test Cases:
 """
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        remove_element_index = 0
-        for index, num in enumerate(nums):
-            if nums[remove_element_index] != val:
-                remove_element_index += 1
-            elif num != val and nums[remove_element_index] == val:
-                nums[remove_element_index], nums[index] = nums[index], nums[remove_element_index]
-                remove_element_index += 1
+        same = 0
+        for different, num in enumerate(nums):
+            if nums[same] != val:
+                same += 1
+            elif num != val and nums[same] == val:
+                nums[different], nums[same] = nums[same], nums[different]
+                same += 1
         
-        return remove_element_index
-        
+        return same
         
         
         
