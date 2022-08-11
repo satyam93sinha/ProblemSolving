@@ -1,5 +1,31 @@
 class Solution:
     def checkIfExist(self, arr: List[int]) -> bool:
+        hashset = set()
+        for num in arr:
+            if (num*2 in hashset) or (num % 2 == 0 and num // 2 in hashset):
+                return True
+            hashset.add(num)
+        return False
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        """
         hashmap = collections.Counter(arr)
         if hashmap.get(0, 0) > 1:
             return True
@@ -14,3 +40,4 @@ class Solution:
             hashmap[num] = hashmap.get(num, 0) + 1
         
         return False
+        """
