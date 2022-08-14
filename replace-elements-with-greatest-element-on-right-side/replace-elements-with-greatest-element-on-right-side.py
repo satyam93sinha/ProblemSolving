@@ -30,7 +30,7 @@ Space: O(1) -> length of this stack will never exceed 1 because there can only b
 Intuition:
 In Approach-2 albeit we use stack, we are actually storing only one element in it so it's possible to store this value into a variable than a stack data structure keeping runtime complexity linear and constant space.
 Time: O(n)
-Space: O(1) -> no extra data structure used, only one variable that stores the maximum value found towards right.
+Space: O(1) -> no extra data structure used, only one variable that stores the maximum value found towards right iff allowed to modify the array else O(N) for answer array
 """
 
 class Solution:
