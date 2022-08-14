@@ -33,52 +33,29 @@ Space: O(1)
 
 class Solution:
     def validMountainArray(self, arr: List[int]) -> bool:
-        # Edge Case
-        if len(arr) < 3:
-            return False
         
-        strictly_increasing = False
-        strictly_decreasing = False
         index = 0
-        
-        # for strictly increasing
-        while index+1 < len(arr) and arr[index] < arr[index+1]:
+        # walking the strictly increasing array
+        while (index + 1) < len(arr) and arr[index] < arr[index + 1]:
             index += 1
-            strictly_increasing = True
-        
-        if not strictly_increasing:
+            
+        # arr is not strictly increasing
+        if index == 0:
             return False
         
-        # for strictly decreasing
-        while index+1 < len(arr) and arr[index] > arr[index+1]:
+        # arr is strictly increasing but can never have a part strictly decreasing
+        if index == len(arr) - 1:
+            return False
+        
+        # walk the strictly decreasing part of the array
+        while (index + 1) < len(arr) and arr[index] > arr[index + 1]:
             index += 1
-            strictly_decreasing = True
         
-        if strictly_increasing and strictly_decreasing and index == len(arr)-1:
-            return True
-        
-        return False
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        # the array arr can only be a valid mountain array 
+        # if and only if index reaches to the end of the array
+        return index == len(arr) - 1
+
+    
         """
         # Approach2
         index = 0
