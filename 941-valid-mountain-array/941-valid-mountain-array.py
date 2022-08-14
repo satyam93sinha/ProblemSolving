@@ -36,16 +36,16 @@ class Solution:
         # Approach2
         index = 0
         # walk the strictly increasing array
-        while index+1 < len(arr) and arr[index+1] > arr[index]:
+        while index+1 < len(arr) and arr[index] < arr[index+1]:
             index += 1
         
         # peak element can not be start or end of the array
-        # it means the array is not either strictly increasing or strictly decreasing
+        # it means the array is either only strictly increasing or strictly decreasing
         if index == 0 or index == len(arr) - 1:
             return False
         
         # walk the isle/striclty decreasing array
-        while index+1 < len(arr) and arr[index+1] < arr[index]:
+        while index+1 < len(arr) and arr[index] > arr[index+1]:
             index += 1
         
         # two cases arise,
