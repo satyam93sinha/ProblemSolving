@@ -15,6 +15,14 @@ Test Cases:
 """
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
+        removal_element_index = 0
+        for index, num in enumerate(nums):
+            if num != val:
+                nums[index], nums[removal_element_index] = nums[removal_element_index], nums[index]
+                removal_element_index += 1
+        return removal_element_index
+        
+        """
         same = 0
         for different, num in enumerate(nums):
             if nums[same] != val:
@@ -24,16 +32,7 @@ class Solution:
                 same += 1
         
         return same
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        """
         
         """
         remove_element_index = 0
