@@ -18,6 +18,11 @@ Approaches:
 1. Use Recursion
 Time: O(n) 
 Space: O(n) recursive stack
+
+2. Use Iteration
+Time: O(n)
+Space: O(n) simply turning the recursive to iterative method, using stack to store nodes stored
+in recursive method in recursive-call-stack space
 """
 
 
