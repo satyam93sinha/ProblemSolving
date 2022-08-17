@@ -30,12 +30,14 @@ Space: O(n) recursive stack
 class Solution:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         preorder = []
-        def helper(root):
-            if not root:
-                return
-            preorder.append(root.val)
-            helper(root.left)
-            helper(root.right)
+        stack = []
+        while root or stack:
+            if root:
+                preorder.append(root.val)
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                root = root.right
         
-        helper(root)
         return preorder
