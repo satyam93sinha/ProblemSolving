@@ -6,14 +6,33 @@
 #         self.right = right
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        return self.is_mirror(root, root)
-    
-    def is_mirror(self, root1, root2) -> bool:
-        if not root1 and not root2:
-            return True
-        elif not root1 or not root2:
-            return False
-        else:
-            return ((root1.val == root2.val)
-                    and (self.is_mirror(root1.left, root2.right))
-                        and (self.is_mirror(root1.right, root2.left)))
+        # preorder iterative
+        # node, left, right order
+        stack = []
+        preorder = []
+        current = root
+        while current or stack:
+            if current:
+                stack.append(current)
+                preorder.append(current.val)
+                current = current.left
+            else:
+                current = stack.pop()
+                current = current.right
+                preorder.append("None")
+        
+        stack = []
+        preorder_right_left = []
+        while root or stack:
+            if root:
+                stack.append(root)
+                preorder_right_left.append(root.val)
+                root = root.right
+            else:
+                root = stack.pop()
+                root = root.left
+                preorder_right_left.append("None")
+        
+        # print("preorder:", preorder)
+        # print("preorder_right_left:", preorder_right_left)
+        return preorder == preorder_right_left
