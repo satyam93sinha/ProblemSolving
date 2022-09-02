@@ -3,9 +3,11 @@ import heapq
 class Solution:
     def thirdMax(self, nums: "List[int]") -> int:
         heap = []
-        nums = set(nums)
+        # nums = set(nums)
         for num in nums:
-            heapq.heappush(heap, num)
+            # O(3) ==> O(1) time operation
+            if num not in heap:
+                heapq.heappush(heap, num)
             if len(heap) > 3:
                 heapq.heappop(heap)
 
