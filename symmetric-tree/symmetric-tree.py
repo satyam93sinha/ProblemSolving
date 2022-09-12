@@ -13,8 +13,7 @@ class Solution:
             queue.append(root)
             
         while queue:
-            length = len(queue)
-            for _ in range(length//2):
+            for _ in range(len(queue)//2):
                 node1 = queue.popleft()
                 node2 = queue.popleft()
                 # unequal nodes, not mirrors
