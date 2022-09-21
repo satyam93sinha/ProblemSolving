@@ -25,27 +25,28 @@ Space: O(window size) --> O(n) in worst case for maintaining queue
 Optimised
 Intuition:
 In addition to the brute force queue, maintain a sum that calculates sum of values as we slide the window and when window size is reached, we can popleft queue's front value and subtract from sum, calculate average and return
-Time: O(1), it can be max O(104) as these many calls are made to next and the average calculation stays O(1)
-Space: O(window size or n) for maintaining queue
+Time: O(1), it can be max O(10^4) as these many calls are made to next and the average calculation stays O(1)
+Space: O(window size or n) for maintaining queue, where 1 <= n <= 1000 => O(1)
 '''
 
 class MovingAverage:
 
     def __init__(self, size: int):
         self.window_size = size
-        self.current_sum = 0
         self.queue = collections.deque()
+        self.current_sum = 0
 
     def next(self, val: int) -> float:
+        # dequeue front element to mainting window size
+        if self.window_size == len(self.queue):
+            self.current_sum -= self.queue.popleft()
+        
+        # append val to window and calculate sum of elements in window size
         self.queue.append(val)
         self.current_sum += val
-        current_size = len(self.queue)
         
-        if current_size > self.window_size:
-            self.current_sum -= self.queue.popleft()
-            current_size -= 1
-        
-        return self.current_sum / current_size
+        # return running average
+        return self.current_sum / len(self.queue)
             
 
 
