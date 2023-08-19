@@ -34,15 +34,12 @@ class Solution:
         seen = set()
         length_longest_substring = 0
         while start <= end and end < len(s):
-            # calculation
-            if s[end] not in seen:
-                seen.add(s[end])
-            else:
-                while s[start] != s[end] and start <= end:
-                    seen.remove(s[start])
-                    start += 1
+            while s[end] in seen:
+                seen.remove(s[start])
                 start += 1
+            
             length_longest_substring = max(length_longest_substring, end-start+1)
+            seen.add(s[end])
             end += 1
         
         return length_longest_substring
