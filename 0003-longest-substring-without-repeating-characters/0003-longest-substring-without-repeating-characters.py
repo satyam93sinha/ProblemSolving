@@ -25,8 +25,6 @@ Intuition:
 In the above approach, we revisit the already visited chars of string s, so is there a way to keep their calculations somehow to use in future iterations than re-calculating? Sliding Window
 Time: O(n)
 Space: O(n)
-"""
-
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
@@ -52,5 +50,22 @@ class Solution:
                         seen.pop(s[start])
                     start += 1
                 end += 1
+        
+        return length_longest_substring
+"""
+# less code and optimised, dict is not required
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        start = end = 0
+        seen = set()
+        length_longest_substring = 0
+        while start <= end and end < len(s):
+            while s[end] in seen:
+                seen.remove(s[start])
+                start += 1
+            
+            length_longest_substring = max(length_longest_substring, end-start+1)
+            seen.add(s[end])
+            end += 1
         
         return length_longest_substring
