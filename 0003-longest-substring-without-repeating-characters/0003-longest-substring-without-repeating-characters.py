@@ -31,15 +31,26 @@ Space: O(n)
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         start = end = 0
-        seen = set()
+        seen = {}
         length_longest_substring = 0
         while start <= end and end < len(s):
-            while s[end] in seen:
-                seen.remove(s[start])
-                start += 1
+            # calculation
+            if s[end] in seen:
+                seen[s[end]] += 1
+            else:
+                seen[s[end]] = 1
             
-            length_longest_substring = max(length_longest_substring, end-start+1)
-            seen.add(s[end])
-            end += 1
+            if len(seen) == end-start+1:
+                # ans <- calculation
+                length_longest_substring = max(length_longest_substring, end-start+1)
+                
+                end += 1
+            else:
+                while len(seen) < end-start+1:
+                    seen[s[start]] -= 1
+                    if seen[s[start]] == 0:
+                        seen.pop(s[start])
+                    start += 1
+                end += 1
         
         return length_longest_substring
