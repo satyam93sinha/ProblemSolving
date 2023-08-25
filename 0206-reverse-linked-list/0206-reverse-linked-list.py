@@ -8,11 +8,12 @@ class Solution:
         if not head or not head.next:
             return head
         
-        curr_node = head
-        new_head = None
-        while curr_node:
-            new_node = ListNode(curr_node.val, new_head)
-            new_head = new_node
-            curr_node = curr_node.next
-        
-        return new_head
+        curr = head
+        prev = None
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        head = prev
+        return head
