@@ -6,7 +6,7 @@
 
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        cycle, match_node = self.has_cycle(head)
+        match_node = self.has_cycle(head)
         # if not cycle: return match_node
         curr_node = head
         while curr_node and match_node and curr_node != match_node:
@@ -14,11 +14,11 @@ class Solution:
             match_node = match_node.next
         return match_node
     
-    def has_cycle(self, head: Optional[ListNode]) -> (bool, Optional[ListNode]):
+    def has_cycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         tortoise = hare = head
         while hare and hare.next:
             hare = hare.next.next
             tortoise = tortoise.next
-            if tortoise == hare: return True, hare
+            if tortoise == hare: return hare
         
-        return False, None
+        return None
