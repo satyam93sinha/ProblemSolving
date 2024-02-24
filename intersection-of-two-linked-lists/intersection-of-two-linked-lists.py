@@ -14,32 +14,14 @@ Edge Cases:
 
 class Solution:
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
-        # find length of both the Linked Lists
-        lengthA, lengthB = self.getLength(headA), self.getLength(headB)
-        # iterate the longer LL until both are of the same length, do not modify headA or headB
-        currA, currB = headA, headB
-        if lengthA > lengthB:
-            currA = self.moveHead(headA, lengthA-lengthB)
-        elif lengthB > lengthA:
-            currB = self.moveHead(headB, lengthB-lengthA)
+        if not headA or not headB:
+            return None
         
-        while currA and currB and currA != currB:
-            currA = currA.next
-            currB = currB.next
+        currA = headA
+        currB = headB
+        # swap nodes when any of them reaches None
+        while currA != currB:
+            currA = headB if not currA else currA.next
+            currB = headA if not currB else currB.next
         
-        if currA == currB:
-            return currA
-            
-        
-    def getLength(self, head: ListNode) -> int:
-        length = 0
-        while head:
-            head = head.next
-            length += 1
-        return length
-    
-    def moveHead(self, head: ListNode, move: int) -> Optional[ListNode]:
-        while head and move:
-            head = head.next
-            move -= 1
-        return head
+        return currA
