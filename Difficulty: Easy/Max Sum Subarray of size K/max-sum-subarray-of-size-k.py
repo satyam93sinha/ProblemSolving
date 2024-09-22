@@ -3,28 +3,21 @@ class Solution:
     def maximumSumSubarray (self,K,Arr,N):
         # code here 
         start = end = 0
-        current_sum = 0
-        max_sum = -float('inf')
+        max_sum = float('-inf')
+        curr_sum = 0
         
         while end < N:
-            current_sum += Arr[end]
+            curr_sum += Arr[end]
             
-            # calculation, building ans
             if end - start + 1 < K:
                 end += 1
-            
             elif end - start + 1 == K:
-                # found k length window
-                max_sum = max(max_sum, current_sum)
-                # reduce ans
-                current_sum -= Arr[start]
-                # slide window
+                max_sum = max(max_sum, curr_sum)
+                curr_sum -= Arr[start]
                 start += 1
                 end += 1
-                
+        
         return max_sum
-            
-            
 
 
 #{ 
