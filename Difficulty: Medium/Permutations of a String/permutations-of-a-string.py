@@ -3,26 +3,27 @@
 class Solution:
     def __init__(self):
         self.result = []
-
+        
     def findPermutation(self, s):
         # Code here
-        s = ''.join(sorted(s))
-        op = ''
-        self.permute(s, op)
+        s_list = list(s)
+        s_list.sort()
+        self.permutations(s_list, 0)
+        self.result.sort()
         return self.result
+        
     
-    def permute(self, inp_s, op):
-        if len(inp_s) == 0:
-            self.result.append(op)
+    def permutations(self, s, index):
+        if index == len(s)-1:
+            self.result.append(''.join(s))
             return
         seen = set()
-        for index in range(len(inp_s)):
-            if inp_s[index] not in seen:
-                seen.add(inp_s[index])
-                new_inp_s = inp_s[:index] + inp_s[index+1:]
-                new_op = op + inp_s[index]
-                # print(f"new inp:{new_inp_s}, new_op:{new_op}, seen:{seen}")
-                self.permute(new_inp_s, new_op)
+        for i in range(index, len(s)):
+            if s[i] not in seen:
+                seen.add(s[i])
+                s[index], s[i] = s[i], s[index]
+                self.permutations(s, index+1)
+                s[index], s[i] = s[i], s[index]
         
 
 
