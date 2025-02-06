@@ -1,31 +1,28 @@
 #User function Template for python3
 class Solution:
-
-    def findSubsets(self, pos, remaining_sum, arr, dp, n):
-        if pos >= n:
-            return int(
-                remaining_sum == 0)  # Return 1 if we found a valid subset
-
-        if dp[pos][remaining_sum] != -1:
-            return dp[pos][remaining_sum]  # Return the already computed value
-
-        # Exclude the current element
-        ans = self.findSubsets(pos + 1, remaining_sum, arr, dp, n)
-
-        # Include the current element if it can be part of the sum
-        if arr[pos] <= remaining_sum:
-            ans += self.findSubsets(pos + 1, remaining_sum - arr[pos], arr, dp,
-                                    n)
-
-        dp[pos][remaining_sum] = ans  # Store the result in dp table
-        return ans
-
     def perfectSum(self, arr, target):
         n = len(arr)
-        # Create a dp array initialized to -1 for memoization
-        dp = [[-1] * (target + 1) for _ in range(n + 1)]
-        # Start recursion with position 0 and the target sum
-        return self.findSubsets(0, target, arr, dp, n)
+        # Create a DP table with (n+1) rows and (target+1) columns
+        dp = [[0] * (target + 1) for _ in range(n + 1)]
+        
+        # Base case: If the target is 0, there's one empty subset that sums to 0
+        dp[0][0] = 1
+        
+        # Fill the DP table
+        for i in range(1, n + 1):
+            for j in range(target + 1):
+                # If the current element is not included
+                dp[i][j] = dp[i - 1][j]
+                # If the current element is included
+                if arr[i - 1] <= j:
+                    dp[i][j] += dp[i - 1][j - arr[i - 1]]
+        
+        # The answer will be in dp[n][target]
+        return dp[n][target]
+
+
+
+
 
 #{ 
  # Driver Code Starts
