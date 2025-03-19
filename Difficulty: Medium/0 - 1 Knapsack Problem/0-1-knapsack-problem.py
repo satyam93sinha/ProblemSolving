@@ -1,26 +1,24 @@
-#User function Template for python3
-
 class Solution:
-    # Function to return max value that can be put in knapsack of capacity.
-    def knapSack(self, capacity, val, wt):
+    def __init__(self):
+        self.dp = {}
+    def knapsack(self, W, val, wt):
         # code here
+        self.dp = [[-1 for _ in range(W+1)] for _ in range(len(wt)+1)]
+        return self.knapsack_0_1(len(wt), W, val, wt)
+    
+    def knapsack_0_1(self, n, W, val, wt):
+        if self.dp[n][W] != -1:
+            return self.dp[n][W]
+        if n == 0 or W == 0:
+            return 0
+        if wt[n-1] <= W:
+            self.dp[n][W] = max(val[n-1] + self.knapsack_0_1(n-1, W-wt[n-1], val, wt),
+                        self.knapsack_0_1(n-1, W, val, wt))
+        else:
+            self.dp[n][W] = self.knapsack_0_1(n-1, W, val, wt)
         
-        cache = {}
-        
-        def dfs(capacity, index):
-            if (capacity, index) in cache:
-                return cache[(capacity, index)]
-            elif index < 0 or capacity == 0:
-                return 0
-            elif capacity-wt[index] >= 0:
-                cache[(capacity, index)] = max(val[index] + dfs(capacity-wt[index], index-1),
-                                            dfs(capacity, index-1))
-                return cache[(capacity, index)]
-            else:
-                return dfs(capacity, index-1)
-        
-        return dfs(capacity, len(wt)-1)
-        
+        return self.dp[n][W]
+
 
 
 #{ 
@@ -28,16 +26,10 @@ class Solution:
 if __name__ == '__main__':
     test_cases = int(input())
     for _ in range(test_cases):
-        # Read capacity
         capacity = int(input())
-        values = list(map(
-            int,
-            input().strip().split()))  # Using 'values' instead of 'val'
-        weights = list(map(
-            int,
-            input().strip().split()))  # Using 'weights' instead of 'wt'
+        values = list(map(int, input().strip().split()))
+        weights = list(map(int, input().strip().split()))
         ob = Solution()
-        print(ob.knapSack(capacity, values, weights))
+        print(ob.knapsack(capacity, values, weights))
         print("~")
-
 # } Driver Code Ends
