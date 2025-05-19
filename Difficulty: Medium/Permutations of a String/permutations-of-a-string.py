@@ -1,30 +1,23 @@
 #User function Template for python3
 
 class Solution:
-    def __init__(self):
-        self.result = []
-        
     def findPermutation(self, s):
         # Code here
-        s_list = list(s)
-        s_list.sort()
-        self.permutations(s_list, 0)
-        self.result.sort()
-        return self.result
+        result = []
+        s = ''.join(sorted(s))
         
-    
-    def permutations(self, s, index):
-        if index == len(s)-1:
-            self.result.append(''.join(s))
+        def permute(inp, out):
+            if not inp:
+                result.append(out)
+                return
+            
+            for index in range(len(inp)):
+                if index == 0 or inp[index] != inp[index-1]:
+                    permute(inp[:index]+inp[index+1:], out+inp[index])
             return
-        seen = set()
-        for i in range(index, len(s)):
-            if s[i] not in seen:
-                seen.add(s[i])
-                s[index], s[i] = s[i], s[index]
-                self.permutations(s, index+1)
-                s[index], s[i] = s[i], s[index]
         
+        permute(s, '')
+        return result
 
 
 
